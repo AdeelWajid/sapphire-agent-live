@@ -1,4 +1,4 @@
-package com.plano.agent.live
+package com.sapphire.agent.live
 
 /**
  * Detects farewell phrases (Allah hafiz, Khuda hafiz, bye, …)

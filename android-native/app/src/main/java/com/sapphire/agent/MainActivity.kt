@@ -1,4 +1,4 @@
-package com.plano.agent
+package com.sapphire.agent
 
 import android.view.animation.AnimationUtils
 import android.Manifest
@@ -24,21 +24,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.plano.agent.audio.AudioEngine
-import com.plano.agent.audio.CallAudioRouter
-import com.plano.agent.audio.RingtonePlayer
-import com.plano.agent.databinding.ActivityMainBinding
-import com.plano.agent.floatbubble.CallBridge
-import com.plano.agent.floatbubble.FloatUiState
-import com.plano.agent.floatbubble.FloatingCallService
-import com.plano.agent.floatbubble.OverlayPermissionHelper
-import com.plano.agent.live.CallState
-import com.plano.agent.live.FarewellDetector
-import com.plano.agent.live.LiveSession
-import com.plano.agent.live.LiveSessionListener
-import com.plano.agent.products.PickerProduct
-import com.plano.agent.products.ProductCatalogApi
-import com.plano.agent.products.ProductPickerDialog
+import com.sapphire.agent.audio.AudioEngine
+import com.sapphire.agent.audio.CallAudioRouter
+import com.sapphire.agent.audio.RingtonePlayer
+import com.sapphire.agent.databinding.ActivityMainBinding
+import com.sapphire.agent.floatbubble.CallBridge
+import com.sapphire.agent.floatbubble.FloatUiState
+import com.sapphire.agent.floatbubble.FloatingCallService
+import com.sapphire.agent.floatbubble.OverlayPermissionHelper
+import com.sapphire.agent.live.CallState
+import com.sapphire.agent.live.FarewellDetector
+import com.sapphire.agent.live.LiveSession
+import com.sapphire.agent.live.LiveSessionListener
+import com.sapphire.agent.products.PickerProduct
+import com.sapphire.agent.products.ProductCatalogApi
+import com.sapphire.agent.products.ProductPickerDialog
 import java.util.Calendar
 import kotlin.concurrent.thread
 

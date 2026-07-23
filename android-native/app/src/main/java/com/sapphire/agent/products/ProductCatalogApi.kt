@@ -1,6 +1,6 @@
-package com.plano.agent.products
+package com.sapphire.agent.products
 
-import com.plano.agent.BuildConfig
+import com.sapphire.agent.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray

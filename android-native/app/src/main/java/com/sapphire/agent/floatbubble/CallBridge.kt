@@ -1,6 +1,6 @@
-package com.plano.agent.floatbubble
+package com.sapphire.agent.floatbubble
 
-import com.plano.agent.live.CallState
+import com.sapphire.agent.live.CallState
 import java.lang.ref.WeakReference
 
 data class FloatUiState(
@@ -11,7 +11,7 @@ data class FloatUiState(
 )
 
 /**
- * Bridge between [FloatingCallService] UI and [com.plano.agent.MainActivity] call logic.
+ * Bridge between [FloatingCallService] UI and [com.sapphire.agent.MainActivity] call logic.
  */
 object CallBridge {
     interface Host {

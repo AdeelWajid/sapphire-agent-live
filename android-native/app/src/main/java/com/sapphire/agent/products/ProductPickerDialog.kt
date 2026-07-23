@@ -1,4 +1,4 @@
-package com.plano.agent.products
+package com.sapphire.agent.products
 
 import android.app.Dialog
 import android.content.Context
@@ -11,9 +11,9 @@ import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.plano.agent.R
-import com.plano.agent.databinding.DialogProductPickerBinding
-import com.plano.agent.databinding.ItemProductBinding
+import com.sapphire.agent.R
+import com.sapphire.agent.databinding.DialogProductPickerBinding
+import com.sapphire.agent.databinding.ItemProductBinding
 
 class ProductPickerDialog(
     context: Context,

@@ -1,4 +1,4 @@
-package com.plano.agent.floatbubble
+package com.sapphire.agent.floatbubble
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
-import com.plano.agent.R
+import com.sapphire.agent.R
 
 object OverlayPermissionHelper {
     fun hasPermission(context: Context): Boolean = Settings.canDrawOverlays(context)

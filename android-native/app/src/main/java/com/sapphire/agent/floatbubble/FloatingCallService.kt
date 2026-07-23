@@ -1,4 +1,4 @@
-package com.plano.agent.floatbubble
+package com.sapphire.agent.floatbubble
 
 import android.Manifest
 import android.app.Notification
@@ -28,9 +28,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.plano.agent.MainActivity
-import com.plano.agent.R
-import com.plano.agent.live.CallState
+import com.sapphire.agent.MainActivity
+import com.sapphire.agent.R
+import com.sapphire.agent.live.CallState
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -45,12 +45,12 @@ class FloatingCallService : Service() {
         const val CHANNEL_ID = "plano_call_ongoing"
         const val NOTIFICATION_ID = 1001
 
-        const val ACTION_ENSURE = "com.plano.agent.float.ENSURE"
-        const val ACTION_SHOW_BUBBLE = "com.plano.agent.float.SHOW_BUBBLE"
-        const val ACTION_HIDE_BUBBLE = "com.plano.agent.float.HIDE_BUBBLE"
-        const val ACTION_IN_CALL = "com.plano.agent.float.IN_CALL"
-        const val ACTION_IDLE = "com.plano.agent.float.IDLE"
-        const val ACTION_STOP = "com.plano.agent.float.STOP"
+        const val ACTION_ENSURE = "com.sapphire.agent.float.ENSURE"
+        const val ACTION_SHOW_BUBBLE = "com.sapphire.agent.float.SHOW_BUBBLE"
+        const val ACTION_HIDE_BUBBLE = "com.sapphire.agent.float.HIDE_BUBBLE"
+        const val ACTION_IN_CALL = "com.sapphire.agent.float.IN_CALL"
+        const val ACTION_IDLE = "com.sapphire.agent.float.IDLE"
+        const val ACTION_STOP = "com.sapphire.agent.float.STOP"
         const val EXTRA_STATUS = "status"
 
         fun ensure(context: Context) = start(context, ACTION_ENSURE)

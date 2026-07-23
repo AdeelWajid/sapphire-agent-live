@@ -1,11 +1,11 @@
-package com.plano.agent.live
+package com.sapphire.agent.live
 
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.plano.agent.BuildConfig
-import com.plano.agent.products.PickerProduct
-import com.plano.agent.products.ProductCatalogApi
+import com.sapphire.agent.BuildConfig
+import com.sapphire.agent.products.PickerProduct
+import com.sapphire.agent.products.ProductCatalogApi
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response

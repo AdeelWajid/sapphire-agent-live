@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.plano.agent"
+    namespace = "com.sapphire.agent"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.plano.agent.native"
+        applicationId = "com.sapphire.agent"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

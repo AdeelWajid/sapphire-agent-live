@@ -1,4 +1,4 @@
-package com.plano.agent.products
+package com.sapphire.agent.products
 
 data class PickerProduct(
     val skuCode: String,
