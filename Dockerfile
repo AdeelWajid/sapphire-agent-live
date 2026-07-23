@@ -10,11 +10,9 @@ RUN npm ci
 COPY index.html ./
 COPY tsconfig.json vite.config.ts ./
 COPY metadata.json ./
-COPY server.ts db.ts orderPrompt.ts orderTools.ts ./
+COPY server.ts dataStore.ts complaintPrompt.ts complaintTools.ts ./
+COPY data ./data
 COPY src ./src
-# COPY public ./public
-# COPY .env ./
-# COPY assets ./assets
 
 RUN npm run build
 
@@ -30,9 +28,11 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 
 COPY --from=build /app/dist ./dist
+# Seed catalog/complaint JSON if host volume is empty on first run
+COPY data ./data
 
 EXPOSE 3000
 
 # Pass secrets at runtime (do not bake keys into the image):
-#   -e GEMINI_API_KEY=... -e DATABASE_URL=...
+#   -e GEMINI_API_KEY=...
 CMD ["node", "dist/server.cjs"]
