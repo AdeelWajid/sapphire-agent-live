@@ -51,7 +51,11 @@ class FloatingCallService : Service() {
         const val ACTION_IN_CALL = "com.sapphire.agent.float.IN_CALL"
         const val ACTION_IDLE = "com.sapphire.agent.float.IDLE"
         const val ACTION_STOP = "com.sapphire.agent.float.STOP"
+        const val ACTION_DISMISS = "com.sapphire.agent.float.DISMISS"
         const val EXTRA_STATUS = "status"
+
+        private const val PREFS = "float_bubble"
+        private const val KEY_DISMISSED = "dismissed_by_user"
 
         fun ensure(context: Context) = start(context, ACTION_ENSURE)
         fun showBubble(context: Context) = start(context, ACTION_SHOW_BUBBLE)
@@ -60,6 +64,18 @@ class FloatingCallService : Service() {
             start(context, ACTION_IN_CALL, status)
         fun enterIdle(context: Context) = start(context, ACTION_IDLE)
         fun stop(context: Context) = start(context, ACTION_STOP)
+        fun dismiss(context: Context) = start(context, ACTION_DISMISS)
+
+        fun isDismissedByUser(context: Context): Boolean =
+            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                .getBoolean(KEY_DISMISSED, false)
+
+        fun setDismissedByUser(context: Context, dismissed: Boolean) {
+            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean(KEY_DISMISSED, dismissed)
+                .apply()
+        }
 
         private fun start(context: Context, action: String, status: String? = null) {
             val intent = Intent(context, FloatingCallService::class.java).apply {
@@ -113,12 +129,27 @@ class FloatingCallService : Service() {
                 stopSelf()
                 return START_NOT_STICKY
             }
+            ACTION_DISMISS -> {
+                setDismissedByUser(this, true)
+                bubbleDesired = false
+                removeOverlay()
+                if (!inCallMode) {
+                    CallBridge.setStateListener(null)
+                    stopForegroundSafely()
+                    stopSelf()
+                    return START_NOT_STICKY
+                }
+                return START_STICKY
+            }
             ACTION_HIDE_BUBBLE -> {
                 bubbleDesired = false
                 removeOverlay()
                 return START_STICKY
             }
             ACTION_SHOW_BUBBLE -> {
+                if (isDismissedByUser(this)) {
+                    return START_STICKY
+                }
                 bubbleDesired = true
                 if (!foregroundStarted) {
                     startAsForeground(
@@ -330,6 +361,10 @@ class FloatingCallService : Service() {
             CallBridge.openApp()
             collapseTray(tray)
         }
+        view.findViewById<ImageButton>(R.id.btnFloatDismiss).setOnClickListener {
+            collapseTray(tray)
+            dismiss(this)
+        }
 
         var downRawX = 0f
         var downRawY = 0f
@@ -497,7 +532,7 @@ class FloatingCallService : Service() {
 
         listOf(
             R.id.btnFloatMute, R.id.btnFloatSpeaker, R.id.btnFloatProducts,
-            R.id.btnFloatMicMode, R.id.btnFloatOpen
+            R.id.btnFloatMicMode, R.id.btnFloatOpen, R.id.btnFloatDismiss
         ).forEach { id ->
             root.findViewById<ImageButton>(id).imageTintList =
                 android.content.res.ColorStateList.valueOf(

@@ -46,6 +46,7 @@
     <string name="calling_status_short">Calling Plano Agent…</string>
     <string name="float_ready_status">Plano Agent ready</string>
     <string name="open_app">open</string>
+    <string name="float_dismiss">dismiss</string>
 
     <!-- Home screen -->
     <string name="pepsi_logo_desc">Brand logo</string>

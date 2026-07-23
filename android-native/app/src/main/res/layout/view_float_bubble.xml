@@ -176,6 +176,32 @@
                 android:textColor="@color/plano_muted"
                 android:textSize="9sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp">
+
+            <ImageButton
+                android:id="@+id/btnFloatDismiss"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_float_action"
+                android:contentDescription="@string/float_dismiss"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_close" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/float_dismiss"
+                android:textColor="@color/plano_muted"
+                android:textSize="9sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout

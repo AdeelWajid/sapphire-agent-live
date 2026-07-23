@@ -539,6 +539,8 @@ class MainActivity : AppCompatActivity(), LiveSessionListener, CallBridge.Host {
         super.onResume()
         appInForeground = true
         CallBridge.register(this)
+        // Allow the bubble again the next time the user leaves the app.
+        FloatingCallService.setDismissedByUser(this, false)
         // Always hide floating UI while the full app is visible.
         FloatingCallService.hideBubble(this)
         publishFloatState()
@@ -552,7 +554,7 @@ class MainActivity : AppCompatActivity(), LiveSessionListener, CallBridge.Host {
     override fun onStop() {
         super.onStop()
         appInForeground = false
-        if (!isChangingConfigurations) {
+        if (!isChangingConfigurations && !FloatingCallService.isDismissedByUser(this)) {
             FloatingCallService.ensure(this)
             FloatingCallService.showBubble(this)
             publishFloatState()
