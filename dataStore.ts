@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = path.join(__dirname, "data");
+// Use cwd so paths work under both `tsx` (dev) and the esbuild CJS bundle
+// (import.meta.url is undefined in dist/server.cjs).
+const DATA_DIR = path.join(process.cwd(), "data");
 const PRODUCTS_PATH = path.join(DATA_DIR, "products.json");
 const COMPLAINTS_PATH = path.join(DATA_DIR, "complaints.json");
 
