@@ -17,12 +17,12 @@ android {
         buildConfigField(
             "String",
             "LIVE_WS_URL",
-            "\"ws://10.0.2.2:3000/api/live\""
+            "\"wss://sapphire.adaxiomtech.com/api/live\""
         )
         buildConfigField(
             "String",
             "API_BASE_URL",
-            "\"http://10.0.2.2:3000\""
+            "\"https://sapphire.adaxiomtech.com\""
         )
     }
 
@@ -33,20 +33,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // Point these at your deployed Sapphire Agent host for release builds.
-            buildConfigField(
-                "String",
-                "LIVE_WS_URL",
-                "\"wss://YOUR_SAPPHIRE_HOST/api/live\""
-            )
-            buildConfigField(
-                "String",
-                "API_BASE_URL",
-                "\"https://YOUR_SAPPHIRE_HOST\""
-            )
         }
         debug {
-            // Emulator → host machine. Physical device: use your LAN IP, e.g. ws://192.168.x.x:3000/api/live
+            // Same production host as release. For local server, override LIVE_WS_URL / API_BASE_URL here.
         }
     }
 

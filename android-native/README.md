@@ -19,12 +19,12 @@ Talk-to-agent only. Same UI as before; wired to the Sapphire Agent complaints ba
 
 ## Point at the server
 
-Debug defaults (emulator → host):
+Defaults (debug + release):
 
-- `LIVE_WS_URL` = `ws://10.0.2.2:3000/api/live`
-- `API_BASE_URL` = `http://10.0.2.2:3000`
+- `LIVE_WS_URL` = `wss://sapphire.adaxiomtech.com/api/live`
+- `API_BASE_URL` = `https://sapphire.adaxiomtech.com`
 
-Physical device: set your LAN IP in `app/build.gradle.kts`.
+Override in `app/build.gradle.kts` if you need a local server.
 
 ## Run
 
