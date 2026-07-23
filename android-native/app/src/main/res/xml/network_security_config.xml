@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">voiceassistant.adaxiomtech.com</domain>
+        <domain includeSubdomains="true">sapphire.adaxiomtech.com</domain>
         <domain includeSubdomains="true">adaxiomtech.com</domain>
     </domain-config>
     <!-- Emulator / local debug over cleartext -->
