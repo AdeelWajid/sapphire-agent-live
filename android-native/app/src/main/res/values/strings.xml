@@ -77,17 +77,6 @@
     <string name="language_note">Urdu only</string>
     <string name="link_manual_order">Need help? Start a call →</string>
 
-    <!-- Login (optional entry; no retailer DB) -->
-    <string name="login_title">Sapphire Agent</string>
-    <string name="login_subtitle">Continue to the voice assistant</string>
-    <string name="login_hint">No account required. Complaints are registered by phone during the call.</string>
-    <string name="login_phone_label">Your phone number (optional)</string>
-    <string name="login_phone_hint">03XXXXXXXXX</string>
-    <string name="login_button">Continue</string>
-    <string name="login_footer">You can also share your phone number with the agent on the call</string>
-    <string name="login_error_phone">Enter a valid phone number (at least 10 digits), or leave blank and continue</string>
-    <string name="login_error_generic">Could not continue. Please try again.</string>
-    <string name="login_success">Welcome</string>
     <string name="logout">Exit</string>
     <string name="logout_confirm_title">Exit app?</string>
     <string name="logout_confirm_message">You can open Sapphire Agent again anytime.</string>

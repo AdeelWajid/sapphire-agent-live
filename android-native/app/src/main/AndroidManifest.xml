@@ -37,12 +37,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-
         <service
             android:name=".floatbubble.FloatingCallService"
             android:exported="false"
