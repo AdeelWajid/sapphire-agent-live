@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Pulse ring animator — apply to vOuterRing and vInnerRing in HomeActivity.
+    Usage:
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.pulse_ring);
+        binding.vOuterRing.startAnimation(anim);
+        // delay inner ring
+        anim.setStartOffset(600);
+        binding.vInnerRing.startAnimation(anim);
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:repeatCount="infinite">
+
+    <scale
+        android:duration="1800"
+        android:fromXScale="0.85"
+        android:fromYScale="0.85"
+        android:toXScale="1.08"
+        android:toYScale="1.08"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:interpolator="@android:anim/decelerate_interpolator" />
+
+    <alpha
+        android:duration="1800"
+        android:fromAlpha="0.6"
+        android:toAlpha="0.2"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:interpolator="@android:anim/decelerate_interpolator" />
+</set>

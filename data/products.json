@@ -1,0 +1,102 @@
+[
+  {
+    "sku_code": "SAP-TEE-001",
+    "name": "Classic Cotton T-Shirt",
+    "category": "Tops",
+    "brand": "Sapphire",
+    "sizes": ["S", "M", "L", "XL"],
+    "color": "Navy",
+    "price_pkr": 1490,
+    "description": "Soft cotton crew-neck tee for everyday wear"
+  },
+  {
+    "sku_code": "SAP-TEE-002",
+    "name": "Premium Polo Shirt",
+    "category": "Tops",
+    "brand": "Sapphire",
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "color": "White",
+    "price_pkr": 2490,
+    "description": "Breathable pique polo with contrast collar"
+  },
+  {
+    "sku_code": "SAP-KUR-101",
+    "name": "Printed Lawn Kurti",
+    "category": "Eastern Wear",
+    "brand": "Sapphire",
+    "sizes": ["XS", "S", "M", "L"],
+    "color": "Multicolor",
+    "price_pkr": 3990,
+    "description": "Light lawn kurti with seasonal print"
+  },
+  {
+    "sku_code": "SAP-KUR-102",
+    "name": "Embroidered Pret Kurta",
+    "category": "Eastern Wear",
+    "brand": "Sapphire",
+    "sizes": ["S", "M", "L", "XL"],
+    "color": "Ivory",
+    "price_pkr": 5490,
+    "description": "Ready-to-wear embroidered kurta for formal wear"
+  },
+  {
+    "sku_code": "SAP-JN-201",
+    "name": "Slim Fit Denim Jeans",
+    "category": "Bottoms",
+    "brand": "Sapphire",
+    "sizes": ["28", "30", "32", "34", "36"],
+    "color": "Indigo",
+    "price_pkr": 4490,
+    "description": "Stretch denim slim jeans"
+  },
+  {
+    "sku_code": "SAP-TR-202",
+    "name": "Linen Lounge Trousers",
+    "category": "Bottoms",
+    "brand": "Sapphire",
+    "sizes": ["S", "M", "L", "XL"],
+    "color": "Beige",
+    "price_pkr": 3290,
+    "description": "Relaxed linen blend trousers"
+  },
+  {
+    "sku_code": "SAP-HD-301",
+    "name": "Fleece Hoodie",
+    "category": "Outerwear",
+    "brand": "Sapphire",
+    "sizes": ["S", "M", "L", "XL"],
+    "color": "Charcoal",
+    "price_pkr": 4990,
+    "description": "Warm fleece hoodie with front pocket"
+  },
+  {
+    "sku_code": "SAP-JKT-302",
+    "name": "Lightweight Bomber Jacket",
+    "category": "Outerwear",
+    "brand": "Sapphire",
+    "sizes": ["M", "L", "XL"],
+    "color": "Olive",
+    "price_pkr": 6990,
+    "description": "Water-resistant bomber for cool evenings"
+  },
+  {
+    "sku_code": "SAP-DRS-401",
+    "name": "Midi Shirt Dress",
+    "category": "Dresses",
+    "brand": "Sapphire",
+    "sizes": ["XS", "S", "M", "L"],
+    "color": "Sky Blue",
+    "price_pkr": 5990,
+    "description": "Button-front midi dress in soft cotton"
+  },
+  {
+    "sku_code": "SAP-ACC-501",
+    "name": "Cotton Scarf",
+    "category": "Accessories",
+    "brand": "Sapphire",
+    "sizes": ["One Size"],
+    "color": "Rose",
+    "price_pkr": 990,
+    "description": "Lightweight printed cotton scarf"
+  }
+]

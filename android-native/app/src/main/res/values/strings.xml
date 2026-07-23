@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">Sapphire Agent</string>
+    <string name="app_title">Sapphire Agent</string>
+    <string name="contact_name">Sapphire Agent</string>
+    <string name="status_ready">Ready to call</string>
+    <string name="status_calling">Calling…</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_listening">Listening…</string>
+    <string name="status_speaking">Speaking…</string>
+    <string name="status_hold">Hold to talk</string>
+    <string name="status_muted">Muted</string>
+    <string name="status_error">Call Failed</string>
+    <string name="call">Call</string>
+    <string name="end">End</string>
+    <string name="mute">mute</string>
+    <string name="keypad">keypad</string>
+    <string name="audio">audio</string>
+    <string name="audio_earpiece">earpiece</string>
+    <string name="audio_earpiece_proximity">earpiece (near ear)</string>
+    <string name="add_call">add call</string>
+    <string name="hold_talk">hold talk</string>
+    <string name="contacts">contacts</string>
+    <string name="open_mic">Open mic</string>
+    <string name="push_to_talk">Push to talk</string>
+    <string name="mic_permission_title">Microphone access</string>
+    <string name="mic_permission_rationale">Sapphire Agent needs the microphone so you can talk during the call.</string>
+    <string name="mic_permission_required">Microphone permission is required to talk with Sapphire Agent.</string>
+    <string name="mic_permission_settings">Microphone is blocked. Enable it in system Settings to place a call.</string>
+    <string name="allow">Allow</string>
+    <string name="not_now">Not now</string>
+    <string name="cancel">Cancel</string>
+    <string name="product_catalog">Clothing catalog</string>
+    <string name="product_catalog_hint">Select items to mention in a complaint, then submit to the assistant.</string>
+    <string name="product_search_hint">Search brand, name, or SKU…</string>
+    <string name="product_loading">Loading products…</string>
+    <string name="product_empty">No products found.</string>
+    <string name="submit_to_assistant">Submit</string>
+    <string name="products">products</string>
+    <string name="call_first_for_products">Start a call first to browse products.</string>
+    <string name="overlay_permission_title">Display over other apps</string>
+    <string name="overlay_permission_message">Allow Sapphire Agent to show a floating button so you can call and control the agent even when the app is minimized.</string>
+    <string name="overlay_permission_needed">Enable “Display over other apps” for the floating button.</string>
+    <string name="call_notification_channel">Sapphire Agent</string>
+    <string name="call_notification_channel_desc">Floating button and ongoing call</string>
+    <string name="call_ongoing_status">On call with Sapphire Agent</string>
+    <string name="calling_status_short">Calling Sapphire Agent…</string>
+    <string name="float_ready_status">Sapphire Agent ready</string>
+    <string name="open_app">open</string>
+
+    <!-- Home screen -->
+    <string name="pepsi_logo_desc">Brand logo</string>
+    <string name="retailer_avatar_desc">Profile</string>
+    <string name="status_online">Online</string>
+    <string name="greeting">Welcome!</string>
+
+    <string name="agent_introduction">
+    We’re ready to help. Your Sapphire clothing assistant can register complaints and answer product questions in Urdu.
+</string>
+    <string name="store_icon_desc">Store icon</string>
+    <string name="agent_name">Sapphire Agent</string>
+    <string name="agent_status">Ready to help</string>
+    <string name="agent_description">Register a complaint, check an issue, or browse clothing.</string>
+    <string name="agent_icon_desc">AI assistant avatar</string>
+    <string name="action_place_order">Start Call</string>
+    <string name="action_place_order_sub">Voice assistant</string>
+    <string name="place_order_icon_desc">Start call icon</string>
+    <string name="action_track_status">Track Status</string>
+    <string name="track_status_icon_desc">Track status icon</string>
+    <string name="action_create_issue">Create an Issue</string>
+    <string name="action_report_issue">Report Issue</string>
+    <string name="action_report_issue_sub">File a complaint</string>
+    <string name="report_issue_icon_desc">Report issue icon</string>
+    <string name="action_catalogue">Catalogue</string>
+    <string name="action_catalogue_sub">Browse clothing</string>
+    <string name="catalogue_icon_desc">Product catalogue icon</string>
+    <string name="btn_start_conversation">Start Conversation</string>
+    <string name="language_note">Urdu only</string>
+    <string name="link_manual_order">Need help? Start a call →</string>
+
+    <!-- Login (optional entry; no retailer DB) -->
+    <string name="login_title">Sapphire Agent</string>
+    <string name="login_subtitle">Continue to the voice assistant</string>
+    <string name="login_hint">No account required. Complaints are registered by phone during the call.</string>
+    <string name="login_phone_label">Your phone number (optional)</string>
+    <string name="login_phone_hint">03XXXXXXXXX</string>
+    <string name="login_button">Continue</string>
+    <string name="login_footer">You can also share your phone number with the agent on the call</string>
+    <string name="login_error_phone">Enter a valid phone number (at least 10 digits), or leave blank and continue</string>
+    <string name="login_error_generic">Could not continue. Please try again.</string>
+    <string name="login_success">Welcome</string>
+    <string name="logout">Exit</string>
+    <string name="logout_confirm_title">Exit app?</string>
+    <string name="logout_confirm_message">You can open Sapphire Agent again anytime.</string>
+    <string name="greeting_format">%1$s\n%2$s</string>
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+    <string name="guest_name">Customer</string>
+</resources>

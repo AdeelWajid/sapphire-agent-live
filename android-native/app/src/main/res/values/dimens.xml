@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing -->
+    <dimen name="screen_padding_h">20dp</dimen>
+    <dimen name="section_gap">24dp</dimen>
+    <dimen name="card_gap">8dp</dimen>
+
+    <!-- Header -->
+    <dimen name="header_height">64dp</dimen>
+    <dimen name="logo_size">36dp</dimen>
+    <dimen name="retailer_avatar_size">40dp</dimen>
+
+    <!-- Hero card -->
+    <dimen name="hero_card_radius">24dp</dimen>
+    <dimen name="hero_card_padding_v">32dp</dimen>
+    <dimen name="avatar_outer_ring">120dp</dimen>
+    <dimen name="avatar_inner_ring">100dp</dimen>
+    <dimen name="avatar_main">80dp</dimen>
+
+    <!-- Quick action cards -->
+    <dimen name="action_card_radius">16dp</dimen>
+    <dimen name="action_icon_size">48dp</dimen>
+    <dimen name="action_icon_inner">24dp</dimen>
+
+    <!-- CTA button -->
+    <dimen name="btn_height">56dp</dimen>
+    <dimen name="btn_radius">28dp</dimen>
+
+    <!-- Text sizes -->
+    <dimen name="text_greeting">22sp</dimen>
+    <dimen name="text_agent_name">20sp</dimen>
+    <dimen name="text_body">13sp</dimen>
+    <dimen name="text_label">11sp</dimen>
+    <dimen name="text_sublabel">9sp</dimen>
+    <dimen name="text_btn">16sp</dimen>
+</resources>

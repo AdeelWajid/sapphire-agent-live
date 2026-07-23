@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/floatRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <!-- Compact action row — shown above or below the bubble, never behind it -->
+    <LinearLayout
+        android:id="@+id/actionTray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_float_tray"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="8dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp">
+
+            <ImageButton
+                android:id="@+id/btnFloatCall"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_float_action_call"
+                android:contentDescription="@string/call"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_phone" />
+
+            <TextView
+                android:id="@+id/labelFloatCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/call"
+                android:textColor="@color/plano_blue"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp">
+
+            <ImageButton
+                android:id="@+id/btnFloatMute"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_float_action"
+                android:contentDescription="@string/mute"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_mic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/mute"
+                android:textColor="@color/plano_muted"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp">
+
+            <ImageButton
+                android:id="@+id/btnFloatSpeaker"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_float_action"
+                android:contentDescription="@string/audio"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_speaker" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/audio"
+                android:textColor="@color/plano_muted"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp">
+
+            <ImageButton
+                android:id="@+id/btnFloatProducts"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_float_action"
+                android:contentDescription="@string/products"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_contacts" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/products"
+                android:textColor="@color/plano_muted"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp">
+
+            <ImageButton
+                android:id="@+id/btnFloatMicMode"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_float_action"
+                android:contentDescription="@string/open_mic"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_add" />
+
+            <TextView
+                android:id="@+id/labelFloatMicMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/open_mic"
+                android:textColor="@color/plano_muted"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp">
+
+            <ImageButton
+                android:id="@+id/btnFloatOpen"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_float_action"
+                android:contentDescription="@string/open_app"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_ptt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/open_app"
+                android:textColor="@color/plano_muted"
+                android:textSize="9sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/bubble"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_float_bubble"
+        android:elevation="10dp">
+
+        <TextView
+            android:id="@+id/bubbleLabel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="PA"
+            android:textColor="@color/plano_white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/pulseDot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_float_pulse"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

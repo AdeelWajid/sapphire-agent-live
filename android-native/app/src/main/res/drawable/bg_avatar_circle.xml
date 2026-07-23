@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AI avatar main circle — semi-transparent white with white border -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!-- 18% white fill -->
+    <solid android:color="#2EFFFFFF" />
+
+    <!-- 50% white stroke -->
+    <stroke
+        android:width="3dp"
+        android:color="#80FFFFFF" />
+</shape>

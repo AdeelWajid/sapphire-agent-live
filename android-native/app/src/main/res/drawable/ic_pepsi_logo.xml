@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Pepsi globe logo mark — vector drawable
+    Outer ring: Pepsi blue, wave band: Pepsi red, inner circle: white
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+
+    <!-- Outer blue circle -->
+    <path
+        android:fillColor="#004B93"
+        android:pathData="M18,1 A17,17 0 1 1 18,35 A17,17 0 1 1 18,1 Z" />
+
+    <!-- Red wave band -->
+    <path
+        android:fillColor="#E32934"
+        android:pathData="M18,4.5
+            C11.044,4.5 5.5,10.044 5.5,17
+            C5.5,24 11.044,29.5 18,29.5
+            C25,29.5 30.5,24 30.5,17
+            C30.5,10.044 25,4.5 18,4.5
+            Z
+            M18,7
+            C23.523,7 28,11.477 28,17
+            C28,22.523 23.523,27 18,27
+            C12.477,27 8,22.523 8,17
+            C8,11.477 12.477,7 18,7
+            Z" />
+
+    <!-- White inner dot -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M18,11.5 A5.5,5.5 0 1 1 18,22.5 A5.5,5.5 0 1 1 18,11.5 Z" />
+</vector>

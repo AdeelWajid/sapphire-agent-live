@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Store / shop icon (Lucide-style) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Building outline -->
+    <path
+        android:strokeColor="#66758A"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M3,9 L3,20 C3,20.55 3.45,21 4,21 L20,21 C20.55,21 21,20.55 21,20 L21,9" />
+
+    <!-- Awning / sign -->
+    <path
+        android:strokeColor="#66758A"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M1,6 L23,6 L20,9 L4,9 Z" />
+
+    <!-- Door -->
+    <path
+        android:strokeColor="#66758A"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M9,21 L9,15 C9,14.45 9.45,14 10,14 L14,14 C14.55,14 15,14.45 15,15 L15,21" />
+
+    <!-- Top sign bar -->
+    <path
+        android:strokeColor="#66758A"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M2,3 L22,3" />
+</vector>

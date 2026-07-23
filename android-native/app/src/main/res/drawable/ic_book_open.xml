@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Book open / catalogue icon (Lucide-style) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Left page -->
+    <path
+        android:strokeColor="#0065BD"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M2,3 C2,3 6,2 12,4" />
+    <path
+        android:strokeColor="#0065BD"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M2,3 L2,20 C2,20 6,19 12,21 L12,4" />
+
+    <!-- Right page -->
+    <path
+        android:strokeColor="#0065BD"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M22,3 C22,3 18,2 12,4" />
+    <path
+        android:strokeColor="#0065BD"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M22,3 L22,20 C22,20 18,19 12,21 L12,4" />
+
+    <!-- Spine line -->
+    <path
+        android:strokeColor="#0065BD"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,4 L12,21" />
+</vector>

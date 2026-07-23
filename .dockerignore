@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+.git
+.gitignore
+#.env
+#.env.*
+#!.env.example
+*.log
+.DS_Store
+.vscode
+.idea
+coverage
+README.md
+bun.lock
+Dockerfile
+.dockerignore

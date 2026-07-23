@@ -1,0 +1,33 @@
+name: Deploying to interserver nbc
+# deploying to dev env
+# This workflow is triggered on push to main branch. connects to the Interserver NBC server via SSH, pulls the latest code, and restarts the Docker containers using docker-compose.
+on:
+  push:
+    branches:
+      - main
+      # - kashif-dev
+      
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code 
+      uses: actions/checkout@v4
+
+    - name: Set up SSH agent and add private key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_KASHIF_PK }}
+
+    - name: Deploy to Interserver via SSH and Github actions
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.INTERSERVER_NBC_USER }}@${{ secrets.INTERSERVER_NBC_HOST }} '
+        cd /home/adaxiomprojects/chat_bot_gemini_live &&
+        git checkout main &&
+        git fetch origin &&
+        git reset --hard origin/main &&
+        docker-compose  -f docker-compose.yml down &&
+        docker-compose -f docker-compose.yml up -d --build
+        '

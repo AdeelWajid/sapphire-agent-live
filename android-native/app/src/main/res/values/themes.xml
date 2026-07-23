@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PlanoAgent" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/plano_blue</item>
+        <item name="colorPrimaryVariant">@color/plano_blue_dark</item>
+        <item name="colorOnPrimary">@color/plano_white</item>
+        <item name="colorSecondary">@color/plano_blue</item>
+        <item name="android:statusBarColor">@color/plano_sky</item>
+        <item name="android:navigationBarColor">@color/plano_sky</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/bg_screen</item>
+    </style>
+
+    <style name="CallControlLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textColor">@color/plano_muted</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

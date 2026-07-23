@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- Idle / first screen (Pepsi home design) -->
+    <include
+        android:id="@+id/homeScreen"
+        layout="@layout/include_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- In-call screen (existing call UI) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/callScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/call_bg"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:id="@+id/avatar"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="56dp"
+            android:background="@drawable/bg_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="PA"
+                android:textColor="@color/plano_white"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/contactName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="@string/contact_name"
+            android:textColor="@color/plano_text"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/avatar" />
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="@string/status_ready"
+            android:textColor="@color/call_muted"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contactName" />
+
+        <TextView
+            android:id="@+id/timerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="0:00"
+            android:textColor="@color/call_muted"
+            android:textSize="17sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusText" />
+
+        <LinearLayout
+            android:id="@+id/controlsPanel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="28dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/bottomActions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnMute"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/bg_control"
+                        android:contentDescription="@string/mute"
+                        android:padding="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_mic" />
+
+                    <TextView
+                        style="@style/CallControlLabel"
+                        android:text="@string/mute" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnKeypad"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/bg_control"
+                        android:contentDescription="@string/keypad"
+                        android:padding="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_keypad" />
+
+                    <TextView
+                        style="@style/CallControlLabel"
+                        android:text="@string/keypad" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnSpeaker"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/bg_control"
+                        android:contentDescription="@string/audio"
+                        android:padding="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_speaker" />
+
+                    <TextView
+                        style="@style/CallControlLabel"
+                        android:text="@string/audio" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnMicMode"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/bg_control"
+                        android:contentDescription="@string/add_call"
+                        android:padding="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_add" />
+
+                    <TextView
+                        android:id="@+id/labelMicMode"
+                        style="@style/CallControlLabel"
+                        android:text="@string/open_mic" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnPtt"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/bg_control"
+                        android:contentDescription="@string/hold_talk"
+                        android:padding="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_ptt" />
+
+                    <TextView
+                        style="@style/CallControlLabel"
+                        android:text="@string/hold_talk" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnContacts"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/bg_control"
+                        android:contentDescription="@string/products"
+                        android:padding="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_contacts" />
+
+                    <TextView
+                        style="@style/CallControlLabel"
+                        android:text="@string/products" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageButton
+                android:id="@+id/callButton"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@drawable/bg_end_button"
+                android:contentDescription="@string/end"
+                android:padding="22dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_phone_down" />
+
+            <TextView
+                android:id="@+id/callButtonLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/end"
+                android:textColor="@color/plano_muted"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/keypadOverlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#E6FEFEFE"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/keypadDisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:letterSpacing="0.08"
+                    android:minHeight="48dp"
+                    android:textColor="@color/plano_text"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <GridLayout
+                    android:id="@+id/keypadGrid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:alignmentMode="alignBounds"
+                    android:columnCount="3"
+                    android:rowCount="4"
+                    android:useDefaultMargins="true" />
+
+                <TextView
+                    android:id="@+id/keypadHide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:padding="12dp"
+                    android:text="Hide"
+                    android:textColor="@color/plano_blue"
+                    android:textSize="17sp" />
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

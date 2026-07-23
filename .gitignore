@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build / output
+build/
+dist/
+coverage/
+*.tsbuildinfo
+.vite/
+out/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Logs & debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun-debug.log*
+
+# Runtime / cache
+.cache/
+.tmp/
+.tmp-*/
+*.pid
+*.seed
+*.pid.lock
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# OS
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors / IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# Optional local tooling
+.turbo/
+.vercel/
+.netlify/
+
+# Android
+**/android*/.gradle/
+**/android*/**/build/
+**/android*/local.properties
+**/android*/captures/
+*.apk
+*.aab
+*.ap_
+*.dex

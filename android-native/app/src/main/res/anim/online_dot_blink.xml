@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Gentle blink/pulse for the Online status dot.
+    Usage:
+        val anim = AnimationUtils.loadAnimation(this, R.anim.online_dot_blink)
+        binding.vOnlineDot.startAnimation(anim)
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <alpha
+        android:duration="1000"
+        android:fromAlpha="1.0"
+        android:toAlpha="0.3"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+</set>

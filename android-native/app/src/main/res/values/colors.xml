@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Portal brand (voiceassistant.adaxiomtech.com) -->
+    <color name="plano_blue">#013BAA</color>
+    <color name="plano_blue_dark">#012F88</color>
+    <color name="plano_sky">#E6F1FE</color>
+    <color name="plano_white">#FEFEFE</color>
+    <color name="plano_rose">#E11D48</color>
+    <color name="plano_text">#013BAA</color>
+    <color name="plano_muted">#6688C4</color>
+    <color name="plano_border">#26013BAA</color>
+
+    <!-- Call screen mapped to portal palette -->
+    <color name="call_bg">@color/plano_sky</color>
+    <color name="call_bg_elevated">@color/plano_white</color>
+    <color name="call_white">@color/plano_white</color>
+    <color name="call_label">@color/plano_text</color>
+    <color name="call_muted">@color/plano_muted</color>
+    <color name="call_control">@color/plano_white</color>
+    <color name="call_control_active">@color/plano_blue</color>
+    <color name="call_control_icon">@color/plano_blue</color>
+    <color name="call_control_icon_active">@color/plano_white</color>
+    <color name="call_green">@color/plano_blue</color>
+    <color name="call_red">@color/plano_rose</color>
+    <color name="call_avatar">@color/plano_blue</color>
+    <color name="call_avatar_accent">@color/plano_blue</color>
+
+    <!-- Pepsi home screen -->
+    <color name="pepsi_blue_deep">#004B93</color>
+    <color name="pepsi_blue_bright">#0065BD</color>
+    <color name="pepsi_red">#E32934</color>
+    <color name="white">#FFFFFF</color>
+    <color name="bg_screen">#F4F8FC</color>
+    <color name="text_dark">#132238</color>
+    <color name="text_muted">#66758A</color>
+    <color name="success_green">#21A366</color>
+    <color name="warning_amber">#F4A340</color>
+    <color name="white_18">#2EFFFFFF</color>
+    <color name="white_25">#40FFFFFF</color>
+    <color name="white_35">#59FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
+    <color name="white_07">#12FFFFFF</color>
+    <color name="white_05">#0DFFFFFF</color>
+    <color name="red_15">#26E32934</color>
+    <color name="shadow_color">#1A004B93</color>
+</resources>

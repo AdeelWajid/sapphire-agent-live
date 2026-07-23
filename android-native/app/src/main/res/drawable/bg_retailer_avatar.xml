@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Retailer avatar button — blue gradient circle -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <gradient
+        android:type="radial"
+        android:gradientRadius="50%"
+        android:startColor="#0065BD"
+        android:endColor="#004B93" />
+</shape>

@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #013BAA;
+  background: #E6F1FE;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.plano-shell {
+  background:
+    radial-gradient(circle at 72% 8%, rgba(1, 59, 170, 0.11), transparent 28rem),
+    linear-gradient(135deg, #E6F1FE 0%, #FEFEFE 52%, #E6F1FE 100%);
+  color: #013BAA;
+}
+
+.plano-shell ::selection {
+  background: #013BAA;
+  color: #FEFEFE;
+}
+
+.plano-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+
+.plano-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(1, 59, 170, 0.22);
+  border-radius: 999px;
+}
+
+.call-avatar {
+  display: grid;
+  place-items: center;
+  width: min(100%, 220px);
+  aspect-ratio: 1 / 1;
+}
+
+.call-avatar--compact { width: 150px; }
+
+.call-avatar__circle {
+  display: grid;
+  place-items: center;
+  width: 68%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: #013BAA;
+  box-shadow: 0 16px 36px rgba(1, 59, 170, 0.22);
+}
+
+.call-avatar__initials {
+  color: #FEFEFE;
+  font-size: clamp(1.8rem, 7vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}

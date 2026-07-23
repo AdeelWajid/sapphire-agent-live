@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Globe / world icon (Lucide-style) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Outer circle -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.8"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,2 A10,10 0 1 1 12,22 A10,10 0 1 1 12,2 Z" />
+
+    <!-- Vertical ellipse (left-right longitude) -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.8"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M2,12 Q6,7 12,7 Q18,7 22,12 Q18,17 12,17 Q6,17 2,12 Z" />
+
+    <!-- Horizontal equator -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.8"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M2,12 L22,12" />
+
+    <!-- Central meridian -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.8"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,2 Q9,7 9,12 Q9,17 12,22" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.8"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,2 Q15,7 15,12 Q15,17 12,22" />
+</vector>

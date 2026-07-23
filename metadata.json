@@ -1,0 +1,10 @@
+{
+  "name": "Sapphire Agent",
+  "description": "Voice assistant for clothing product info and complaints (JSON file storage)",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

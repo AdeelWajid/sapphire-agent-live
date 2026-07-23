@@ -1,0 +1,21 @@
+[
+  {
+    "id": "cmp_1784808305882_3qzyfj",
+    "complaint_number": "CMP-1",
+    "phone": "3024099079",
+    "customer_name": "وقاص عظیم",
+    "address": "133, Haza Khali Block, New Soda Bazar, Pak Town, Multan Road, Lahore",
+    "order_number": null,
+    "invoice_number": null,
+    "purchase_channel": "shop",
+    "purchase_date": "22 جولائی 2026",
+    "received_date": null,
+    "complaint_type": "Size Issue",
+    "description": "سائز کا مسئلہ ہے۔ دکان سے صحیح سائز لیا تھا لیکن گھر پر غلط نکلا۔ پولو شرٹ تھی۔",
+    "product_sku": null,
+    "product_name": null,
+    "status": "Open",
+    "created_at": "2026-07-23T12:05:05.882Z",
+    "updated_at": "2026-07-23T12:05:05.882Z"
+  }
+]
