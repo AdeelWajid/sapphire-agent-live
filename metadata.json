@@ -1,5 +1,5 @@
 {
-  "name": "Sapphire Agent",
+  "name": "Plano Agent",
   "description": "Voice assistant for clothing product info and complaints (JSON file storage)",
   "requestFramePermissions": [
     "microphone"

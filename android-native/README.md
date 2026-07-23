@@ -1,6 +1,6 @@
-# Sapphire Agent — Native Android (Kotlin)
+# Plano Agent — Native Android (Kotlin)
 
-Talk-to-agent only. Same UI as before; wired to the Sapphire Agent complaints backend.
+Talk-to-agent only. Same UI as before; wired to the Plano Agent complaints backend.
 
 ## Features
 
@@ -15,7 +15,7 @@ Talk-to-agent only. Same UI as before; wired to the Sapphire Agent complaints ba
 - Android Studio + JDK 17
 - Device / emulator API **26+**
 - Mic permission
-- Sapphire Agent server running (`npm run dev` in repo root)
+- Plano Agent server running (`npm run dev` in repo root)
 
 ## Point at the server
 

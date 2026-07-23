@@ -206,7 +206,7 @@ async function startServer() {
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: GEMINI_TEXT_MODEL,
-        contents: `Optimize custom operator rules for Sapphire Agent, a clothing complaints voice assistant that speaks ONLY Pakistani Urdu.
+        contents: `Optimize custom operator rules for Plano Agent, a clothing complaints voice assistant that speaks ONLY Pakistani Urdu.
 Rewrite into a clean bullet list. Keep intent. One rule per line starting with "- ".
 Do not invent policies. Remind that spoken replies must stay in Urdu. Output ONLY the bullet list.
 
@@ -326,7 +326,7 @@ ${rawRules}`,
 
     try {
       const { extraRules } = await waitForSessionConfig();
-      // Sapphire Agent is Urdu-only — ignore client language switches.
+      // Plano Agent is Urdu-only — ignore client language switches.
       const languageMode: LanguageMode = "urdu";
       const catalog = buildCatalogText(20);
       const baseSystemInstruction = buildComplaintSystemPrompt(
@@ -346,7 +346,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
       });
 
       console.log(
-        `Connecting Sapphire Agent voice=${voiceName} model=${GEMINI_LIVE_MODEL} lang=${languageMode}`
+        `Connecting Plano Agent voice=${voiceName} model=${GEMINI_LIVE_MODEL} lang=${languageMode}`
       );
 
       let farewellHangupSent = false;
@@ -565,29 +565,29 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
           },
           onclose: (ev?: any) => {
             console.log(
-              "Sapphire Agent session closed",
+              "Plano Agent session closed",
               ev?.code || ev?.reason || ""
             );
             toolCallPending = false;
             sendJson({ type: "status", status: "closed" });
           },
           onerror: (err: any) => {
-            console.error("Sapphire Agent session error:", err);
+            console.error("Plano Agent session error:", err);
             sendJson({
               type: "error",
               message:
-                err.message || "Sapphire Agent experienced an internal error.",
+                err.message || "Plano Agent experienced an internal error.",
             });
           },
         },
       });
 
       aiSessionReady = true;
-      console.log("Sapphire Agent session established");
+      console.log("Plano Agent session established");
       sendJson({ type: "status", status: "established" });
 
       const greetingCue =
-        "Customer joined. Give a SHORT Pakistani Urdu greeting as Sapphire Agent. Speak ONLY Urdu. Offer clothing product info OR complaint help. Ask ONLY one short question at the end (e.g. how can I help). Do not ask for phone/name/address yet. Do not list multiple questions. Speak only — do not wait. Do not use English or Roman Urdu.";
+        "Customer joined. Give a SHORT Pakistani Urdu greeting as Plano Agent. Speak ONLY Urdu. Offer clothing product info OR complaint help. Ask ONLY one short question at the end (e.g. how can I help). Do not ask for phone/name/address yet. Do not list multiple questions. Speak only — do not wait. Do not use English or Roman Urdu.";
 
       const sendGreetingOnce = () => {
         if (greetingSent || !session || !aiSessionReady || clientClosed) return;
@@ -677,18 +677,18 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
         try {
           session?.close();
         } catch (err) {
-          console.error("Error closing Sapphire Agent session:", err);
+          console.error("Error closing Plano Agent session:", err);
         }
         session = null;
         aiSessionReady = false;
       });
     } catch (err: any) {
-      console.error("Failed to initialize Sapphire Agent:", err);
+      console.error("Failed to initialize Plano Agent:", err);
       ws.send(
         JSON.stringify({
           type: "error",
           message:
-            "Failed to establish Sapphire Agent connection: " +
+            "Failed to establish Plano Agent connection: " +
             (err.message || String(err)),
         })
       );
@@ -723,7 +723,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
   }
 
   server.listen(PORT, "0.0.0.0", () => {
-    console.log(`Sapphire Agent listening on http://0.0.0.0:${PORT}`);
+    console.log(`Plano Agent listening on http://0.0.0.0:${PORT}`);
   });
 }
 

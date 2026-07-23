@@ -35,7 +35,7 @@ interface LiveSessionListener {
 }
 
 /**
- * Native WebSocket client for Sapphire Agent `/api/live`.
+ * Native WebSocket client for Plano Agent `/api/live`.
  */
 class LiveSession(
     private val listener: LiveSessionListener,

@@ -790,7 +790,7 @@ class MainActivity : AppCompatActivity(), LiveSessionListener, CallBridge.Host {
         farewellTriggered = true
         farewellPending = true
         awaitingEndConfirm = false
-        android.util.Log.i("SapphireAgent", "Hang up after agent finishes: $source")
+        android.util.Log.i("PlanoAgent", "Hang up after agent finishes: $source")
         mainHandler.removeCallbacks(farewellFallback)
         // Absolute safety net if speaking detection never settles.
         mainHandler.postDelayed(farewellFallback, 12_000L)

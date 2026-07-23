@@ -673,7 +673,7 @@ export default function App() {
                 <Sparkles className="h-5 w-5" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold tracking-tight">Sapphire Agent</h1>
+                <h1 className="text-2xl font-bold tracking-tight">Plano Agent</h1>
                 <p className="text-sm text-[#0B2C6E]/60">
                   Urdu clothing complaints assistant
                 </p>
@@ -720,7 +720,7 @@ export default function App() {
                   className="inline-flex items-center gap-2 rounded-full bg-[#0B2C6E] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-[#0B2C6E]/90 disabled:opacity-60"
                 >
                   <Phone className="h-4 w-4" />
-                  {status === "connecting" ? "Connecting…" : "Call Sapphire Agent"}
+                  {status === "connecting" ? "Connecting…" : "Call Plano Agent"}
                 </button>
               ) : (
                 <>

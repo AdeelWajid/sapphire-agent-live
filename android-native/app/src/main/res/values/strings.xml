@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Sapphire Agent</string>
-    <string name="app_title">Sapphire Agent</string>
-    <string name="contact_name">Sapphire Agent</string>
+    <string name="app_name">Plano Agent</string>
+    <string name="app_title">Plano Agent</string>
+    <string name="contact_name">Plano Agent</string>
     <string name="status_ready">Ready to call</string>
     <string name="status_calling">Calling…</string>
     <string name="status_connected">Connected</string>
@@ -23,8 +23,8 @@
     <string name="open_mic">Open mic</string>
     <string name="push_to_talk">Push to talk</string>
     <string name="mic_permission_title">Microphone access</string>
-    <string name="mic_permission_rationale">Sapphire Agent needs the microphone so you can talk during the call.</string>
-    <string name="mic_permission_required">Microphone permission is required to talk with Sapphire Agent.</string>
+    <string name="mic_permission_rationale">Plano Agent needs the microphone so you can talk during the call.</string>
+    <string name="mic_permission_required">Microphone permission is required to talk with Plano Agent.</string>
     <string name="mic_permission_settings">Microphone is blocked. Enable it in system Settings to place a call.</string>
     <string name="allow">Allow</string>
     <string name="not_now">Not now</string>
@@ -38,13 +38,13 @@
     <string name="products">products</string>
     <string name="call_first_for_products">Start a call first to browse products.</string>
     <string name="overlay_permission_title">Display over other apps</string>
-    <string name="overlay_permission_message">Allow Sapphire Agent to show a floating button so you can call and control the agent even when the app is minimized.</string>
+    <string name="overlay_permission_message">Allow Plano Agent to show a floating button so you can call and control the agent even when the app is minimized.</string>
     <string name="overlay_permission_needed">Enable “Display over other apps” for the floating button.</string>
-    <string name="call_notification_channel">Sapphire Agent</string>
+    <string name="call_notification_channel">Plano Agent</string>
     <string name="call_notification_channel_desc">Floating button and ongoing call</string>
-    <string name="call_ongoing_status">On call with Sapphire Agent</string>
-    <string name="calling_status_short">Calling Sapphire Agent…</string>
-    <string name="float_ready_status">Sapphire Agent ready</string>
+    <string name="call_ongoing_status">On call with Plano Agent</string>
+    <string name="calling_status_short">Calling Plano Agent…</string>
+    <string name="float_ready_status">Plano Agent ready</string>
     <string name="open_app">open</string>
 
     <!-- Home screen -->
@@ -54,10 +54,10 @@
     <string name="greeting">Welcome!</string>
 
     <string name="agent_introduction">
-    We’re ready to help. Your Sapphire clothing assistant can register complaints and answer product questions in Urdu.
+    We’re ready to help. Your Plano clothing assistant can register complaints and answer product questions in Urdu.
 </string>
     <string name="store_icon_desc">Store icon</string>
-    <string name="agent_name">Sapphire Agent</string>
+    <string name="agent_name">Plano Agent</string>
     <string name="agent_status">Ready to help</string>
     <string name="agent_description">Register a complaint, check an issue, or browse clothing.</string>
     <string name="agent_icon_desc">AI assistant avatar</string>
@@ -79,7 +79,7 @@
 
     <string name="logout">Exit</string>
     <string name="logout_confirm_title">Exit app?</string>
-    <string name="logout_confirm_message">You can open Sapphire Agent again anytime.</string>
+    <string name="logout_confirm_message">You can open Plano Agent again anytime.</string>
     <string name="greeting_format">%1$s\n%2$s</string>
     <string name="greeting_morning">Good morning</string>
     <string name="greeting_afternoon">Good afternoon</string>

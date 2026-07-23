@@ -1,4 +1,4 @@
-# Sapphire Agent
+# Plano Agent
 
 Voice assistant for **clothing** product info and **complaints**. Cloned from the Plano Agent live app, then simplified:
 
