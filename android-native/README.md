@@ -8,7 +8,7 @@ Talk-to-agent only. Same UI as before; wired to the Plano Agent complaints backe
 - No retailer database login — opens straight to home
 - Live voice over WebSocket (`/api/live`) with **Urdu-only** session
 - Clothing product picker (`/api/products` / `show_products`)
-- Floating call bubble, PTT default, farewell / `end_call` hang-up
+- Floating call bubble, open-mic default, farewell / `end_call` hang-up
 
 ## Requirements
 

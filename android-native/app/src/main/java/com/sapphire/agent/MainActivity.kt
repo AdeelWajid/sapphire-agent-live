@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), LiveSessionListener, CallBridge.Host {
     private var voiceSessionStarted = false
 
     private var callState: CallState = CallState.IDLE
-    private var usePushToTalk = true
+    private var usePushToTalk = false
     private var micMuted = false
     private var callStartedAt = 0L
     private var agentSpeaking = false
