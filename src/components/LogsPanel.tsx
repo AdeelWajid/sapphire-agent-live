@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FileText, RefreshCw, ScrollText, X } from "lucide-react";
+import { FileText, MessageSquare, RefreshCw, ScrollText, X } from "lucide-react";
 
 type LogFileInfo = {
   id: string;
@@ -51,8 +51,29 @@ function formatTime(ts?: string) {
   }
 }
 
+function entryText(data: unknown): string {
+  if (!data) return "";
+  if (typeof data === "string") return data;
+  if (typeof data === "object" && data !== null && "text" in data) {
+    return String((data as { text?: unknown }).text || "");
+  }
+  return JSON.stringify(data, null, 2);
+}
+
+function isChatEvent(event?: string) {
+  return (
+    event === "chat.user" ||
+    event === "chat.agent" ||
+    event === "chat.tool" ||
+    event === "agent:user_transcript" ||
+    event === "agent:model_transcript" ||
+    event === "agent:model_text"
+  );
+}
+
 export default function LogsPanel({ open, onClose }: Props) {
   const [tab, setTab] = useState<"session" | "day">("session");
+  const [view, setView] = useState<"chat" | "all">("chat");
   const [sessions, setSessions] = useState<LogFileInfo[]>([]);
   const [days, setDays] = useState<LogFileInfo[]>([]);
   const [selectedId, setSelectedId] = useState<string>("");
@@ -94,8 +115,8 @@ export default function LogsPanel({ open, onClose }: Props) {
     try {
       const path =
         kind === "session"
-          ? `/api/logs/session/${encodeURIComponent(id)}?tail=400`
-          : `/api/logs/day/${encodeURIComponent(id)}?tail=400`;
+          ? `/api/logs/session/${encodeURIComponent(id)}?tail=800`
+          : `/api/logs/day/${encodeURIComponent(id)}?tail=800`;
       const res = await fetch(path);
       const json = await res.json();
       if (!res.ok || !json?.ok) throw new Error(json?.error || "Failed to load log");
@@ -142,15 +163,17 @@ export default function LogsPanel({ open, onClose }: Props) {
   const files = tab === "session" ? sessions : days;
 
   const visible = useMemo(() => {
+    const base =
+      view === "chat" ? entries.filter((e) => isChatEvent(e.event)) : entries;
     const q = filter.trim().toLowerCase();
-    if (!q) return entries;
-    return entries.filter((e) => {
+    if (!q) return base;
+    return base.filter((e) => {
       const hay = `${e.event || ""} ${e.scope || ""} ${e.level || ""} ${
         e.data ? JSON.stringify(e.data) : ""
       } ${e.raw || ""}`.toLowerCase();
       return hay.includes(q);
     });
-  }, [entries, filter]);
+  }, [entries, filter, view]);
 
   if (!open) return null;
 
@@ -161,7 +184,7 @@ export default function LogsPanel({ open, onClose }: Props) {
           <div>
             <h2 className="text-lg font-bold text-[#013BAA]">Live logs</h2>
             <p className="text-xs text-[#013BAA]/55">
-              Call communication from the server log files
+              Call chat and server communication
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -191,7 +214,7 @@ export default function LogsPanel({ open, onClose }: Props) {
           </div>
         </div>
 
-        <div className="flex gap-2 border-b border-[#013BAA]/10 px-5 py-3">
+        <div className="flex flex-wrap gap-2 border-b border-[#013BAA]/10 px-5 py-3">
           <button
             type="button"
             onClick={() => {
@@ -222,11 +245,34 @@ export default function LogsPanel({ open, onClose }: Props) {
             <FileText className="h-3.5 w-3.5" />
             Daily
           </button>
+          <button
+            type="button"
+            onClick={() => setView("chat")}
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${
+              view === "chat"
+                ? "bg-emerald-600 text-white"
+                : "border border-[#013BAA]/15 text-[#013BAA]/70"
+            }`}
+          >
+            <MessageSquare className="h-3.5 w-3.5" />
+            Chat
+          </button>
+          <button
+            type="button"
+            onClick={() => setView("all")}
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${
+              view === "all"
+                ? "bg-emerald-600 text-white"
+                : "border border-[#013BAA]/15 text-[#013BAA]/70"
+            }`}
+          >
+            All events
+          </button>
           <input
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            placeholder="Filter events…"
-            className="ml-auto min-w-0 flex-1 rounded-xl border border-[#013BAA]/15 px-3 py-1.5 text-xs outline-none focus:border-[#013BAA]/40"
+            placeholder="Filter…"
+            className="min-w-[140px] flex-1 rounded-xl border border-[#013BAA]/15 px-3 py-1.5 text-xs outline-none focus:border-[#013BAA]/40"
           />
         </div>
 
@@ -270,7 +316,42 @@ export default function LogsPanel({ open, onClose }: Props) {
             {loading && entries.length === 0 ? (
               <p className="text-xs text-[#013BAA]/45">Loading…</p>
             ) : visible.length === 0 ? (
-              <p className="text-xs text-[#013BAA]/45">No matching log lines.</p>
+              <p className="text-xs text-[#013BAA]/45">
+                {view === "chat"
+                  ? "No chat lines yet. Make a new call after deploy (transcripts are now on)."
+                  : "No matching log lines."}
+              </p>
+            ) : view === "chat" ? (
+              visible.map((e, i) => {
+                const role =
+                  e.event === "chat.user" || e.event === "agent:user_transcript"
+                    ? "user"
+                    : e.event === "chat.tool"
+                      ? "tool"
+                      : "agent";
+                const text = entryText(e.data);
+                return (
+                  <div
+                    key={`${e.ts || i}-${e.event || "e"}-${i}`}
+                    className={`flex ${role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    <div
+                      className={`max-w-[90%] rounded-2xl px-3 py-2 text-xs shadow-sm ${
+                        role === "user"
+                          ? "bg-[#013BAA] text-white"
+                          : role === "tool"
+                            ? "border border-amber-200 bg-amber-50 text-amber-950"
+                            : "border border-[#013BAA]/10 bg-[#E6F1FE] text-[#0B2C6E]"
+                      }`}
+                    >
+                      <div className="mb-1 text-[10px] font-semibold uppercase tracking-wide opacity-70">
+                        {role} · {formatTime(e.ts)}
+                      </div>
+                      <div className="whitespace-pre-wrap break-words">{text || e.event}</div>
+                    </div>
+                  </div>
+                );
+              })
             ) : (
               visible.map((e, i) => (
                 <div

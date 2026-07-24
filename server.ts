@@ -30,8 +30,9 @@ const GEMINI_TEXT_MODEL =
   process.env.GEMINI_TEXT_MODEL?.trim() || "gemini-3.1-flash-lite";
 const GEMINI_LIVE_MODEL =
   process.env.GEMINI_LIVE_MODEL?.trim() || "gemini-3.1-flash-live-preview";
+/** Live input/output transcripts — on by default so call chat can be logged/viewed. */
 const GEMINI_LIVE_TRANSCRIPTS =
-  (process.env.GEMINI_LIVE_TRANSCRIPTS || "false").trim().toLowerCase() ===
+  (process.env.GEMINI_LIVE_TRANSCRIPTS || "true").trim().toLowerCase() ===
   "true";
 
 console.log(
@@ -86,6 +87,17 @@ function normalizePakistaniTranscript(text: string): string {
   return transliterateGurmukhi(String(text || ""))
     .replace(/\bkripa\b/gi, "meherbani")
     .replace(/\bkripya\b/gi, "meherbani karke");
+}
+
+function mergeTranscript(prev: string, next: string): string {
+  const a = (prev || "").trim();
+  const b = (next || "").trim();
+  if (!a) return b;
+  if (!b) return a;
+  if (b.startsWith(a)) return b;
+  if (a.startsWith(b)) return a;
+  if (a.endsWith(b)) return a;
+  return `${a} ${b}`.replace(/\s+/g, " ").trim();
 }
 
 function isFarewellTranscript(text: string): boolean {
@@ -422,6 +434,17 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
       let clientAudioChunks = 0;
       let clientAudioChars = 0;
       let agentAudioChunks = 0;
+      let pendingUserChat = "";
+      let pendingAgentChat = "";
+
+      const flushChat = (role: "user" | "agent", reason: string) => {
+        const text =
+          role === "user" ? pendingUserChat.trim() : pendingAgentChat.trim();
+        if (!text) return;
+        slog.info(`chat.${role}`, { text, reason });
+        if (role === "user") pendingUserChat = "";
+        else pendingAgentChat = "";
+      };
 
       const flushAudioStats = (reason: string) => {
         if (clientAudioChunks === 0 && agentAudioChunks === 0) return;
@@ -443,7 +466,11 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
           if (agentAudioChunks === 1 || agentAudioChunks % 40 === 0) {
             slog.clientOut("audio", { chunk: agentAudioChunks });
           }
-        } else if (payload.type) {
+        } else if (
+          payload.type &&
+          payload.type !== "model-text" &&
+          payload.type !== "user-text"
+        ) {
           slog.clientOut(String(payload.type), summarizeForLog(payload));
         }
         ws.send(JSON.stringify(payload));
@@ -535,6 +562,8 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             if (!session || clientClosed) return;
 
             if (message.toolCall?.functionCalls?.length) {
+              flushChat("agent", "before_tool");
+              flushChat("user", "before_tool");
               toolCallPending = true;
               sendJson({ type: "tool_pending", pending: true });
               const functionResponses = [];
@@ -549,6 +578,11 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
                   const safeResult = sanitizeToolResponse(result);
                   slog.agent("tool_result", {
                     name: fc.name,
+                    result: summarizeForLog(safeResult),
+                  });
+                  slog.info("chat.tool", {
+                    name: fc.name,
+                    args: fc.args,
                     result: summarizeForLog(safeResult),
                   });
                   functionResponses.push({
@@ -607,6 +641,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             }
 
             if (message.serverContent?.interrupted) {
+              flushChat("agent", "interrupted");
               sendJson({ type: "interrupted" });
             }
 
@@ -614,7 +649,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
               for (const part of message.serverContent.modelTurn.parts) {
                 if (part.text) {
                   const text = normalizePakistaniTranscript(part.text);
-                  slog.agent("model_text", { text });
+                  pendingAgentChat = mergeTranscript(pendingAgentChat, text);
                   sendJson({
                     type: "model-text",
                     text,
@@ -626,17 +661,22 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             const outputTx = message.serverContent?.outputTranscription?.text;
             if (outputTx) {
               const text = normalizePakistaniTranscript(outputTx);
-              slog.agent("model_transcript", { text });
+              if (pendingUserChat.trim()) flushChat("user", "before_agent_reply");
+              pendingAgentChat = mergeTranscript(pendingAgentChat, text);
               sendJson({
                 type: "model-text",
                 text,
               });
             }
 
+            if (message.serverContent?.turnComplete) {
+              flushChat("agent", "turn_complete");
+            }
+
             const emitUserText = (text: string) => {
               const normalized = normalizePakistaniTranscript(text);
               if (!normalized.trim()) return;
-              slog.agent("user_transcript", { text: normalized });
+              pendingUserChat = mergeTranscript(pendingUserChat, normalized);
               sendJson({ type: "user-text", text: normalized });
               recentUserTranscript = `${recentUserTranscript} ${normalized}`
                 .replace(/\s+/g, " ")
@@ -647,6 +687,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
                 isFarewellTranscript(recentUserTranscript)
               ) {
                 farewellHangupSent = true;
+                flushChat("user", "farewell");
                 sendJson({
                   type: "farewell_hangup",
                   text: recentUserTranscript,
@@ -664,6 +705,8 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             if (inputTx) emitUserText(inputTx);
           },
           onclose: (ev?: any) => {
+            flushChat("agent", "session_closed");
+            flushChat("user", "session_closed");
             slog.info("live_session_closed", {
               code: ev?.code || null,
               reason: ev?.reason || null,
@@ -759,12 +802,14 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
           }
 
           if (message.type === "activity_start" && session && aiSessionReady) {
+            flushChat("agent", "user_started_speaking");
             slog.clientIn("activity_start");
             session.sendRealtimeInput({ activityStart: {} });
           }
 
           if (message.type === "activity_end" && session && aiSessionReady) {
             flushAudioStats("activity_end");
+            flushChat("user", "activity_end");
             slog.clientIn("activity_end");
             session.sendRealtimeInput({ activityEnd: {} });
           }
@@ -802,6 +847,8 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
         clearTimeout(greetingTimer);
         ws.off("message", onClientMessage);
         slog.info("ws_closed");
+        flushChat("agent", "ws_closed");
+        flushChat("user", "ws_closed");
         flushAudioStats("ws_closed");
         console.log("Client WebSocket connection closed");
         try {

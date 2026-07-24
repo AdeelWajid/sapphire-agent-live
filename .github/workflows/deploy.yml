@@ -55,6 +55,13 @@ jobs:
             exit 1
           fi
 
+          # Ensure call chat transcripts are enabled for Live logs
+          if grep -q '^GEMINI_LIVE_TRANSCRIPTS=' .env; then
+            sed -i 's|^GEMINI_LIVE_TRANSCRIPTS=.*|GEMINI_LIVE_TRANSCRIPTS=true|' .env
+          else
+            printf 'GEMINI_LIVE_TRANSCRIPTS=true\n' >> .env
+          fi
+
           docker-compose -f docker-compose.yml down
           docker-compose -f docker-compose.yml up -d --build
           EOF
