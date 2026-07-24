@@ -16,6 +16,11 @@ import {
 } from "./dataStore";
 import { buildComplaintSystemPrompt } from "./complaintPrompt";
 import { COMPLAINT_TOOLS, handleComplaintToolCall } from "./complaintTools";
+import {
+  createSessionLogger,
+  logBoot,
+  summarizeForLog,
+} from "./sessionLogger";
 
 const GEMINI_TEXT_MODEL =
   process.env.GEMINI_TEXT_MODEL?.trim() || "gemini-3.1-flash-lite";
@@ -28,6 +33,11 @@ const GEMINI_LIVE_TRANSCRIPTS =
 console.log(
   `[models] text=${GEMINI_TEXT_MODEL} | live=${GEMINI_LIVE_MODEL} | transcripts=${GEMINI_LIVE_TRANSCRIPTS}`
 );
+logBoot("sapphire-agent-live", {
+  textModel: GEMINI_TEXT_MODEL,
+  liveModel: GEMINI_LIVE_MODEL,
+  transcripts: GEMINI_LIVE_TRANSCRIPTS,
+});
 
 function transliterateGurmukhi(text: string): string {
   if (!/[\u0A00-\u0A7F]/.test(text)) return text;
@@ -237,13 +247,18 @@ ${rawRules}`,
   });
 
   wss.on("connection", async (ws: WebSocket, req) => {
-    console.log("Client WebSocket connected");
+    const slog = createSessionLogger("sapphire-agent-live", {
+      ip: req.socket.remoteAddress || null,
+      ua: req.headers["user-agent"] || null,
+    });
+    slog.info("ws_connected");
 
     const reqUrl = new URL(req.url || "", `http://${req.headers.host}`);
     let voiceName = reqUrl.searchParams.get("voice") || "Charon";
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
+      slog.error("missing_gemini_api_key");
       ws.send(
         JSON.stringify({
           type: "error",
@@ -348,6 +363,12 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
       console.log(
         `Connecting Plano Agent voice=${voiceName} model=${GEMINI_LIVE_MODEL} lang=${languageMode}`
       );
+      slog.info("connecting_live", {
+        voice: voiceName,
+        model: GEMINI_LIVE_MODEL,
+        languageMode,
+        hasExtraRules: Boolean(extraRules.trim()),
+      });
 
       let farewellHangupSent = false;
       let recentUserTranscript = "";
@@ -356,9 +377,33 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
       // Gemini Live drops the session if realtime audio/activity arrives
       // while a tool call is pending (WebSocket 1008 policy violation).
       let toolCallPending = false;
+      let clientAudioChunks = 0;
+      let clientAudioChars = 0;
+      let agentAudioChunks = 0;
+
+      const flushAudioStats = (reason: string) => {
+        if (clientAudioChunks === 0 && agentAudioChunks === 0) return;
+        slog.info("audio_stats", {
+          reason,
+          clientChunks: clientAudioChunks,
+          clientChars: clientAudioChars,
+          agentChunks: agentAudioChunks,
+        });
+        clientAudioChunks = 0;
+        clientAudioChars = 0;
+        agentAudioChunks = 0;
+      };
 
       const sendJson = (payload: Record<string, unknown>) => {
         if (clientClosed || ws.readyState !== ws.OPEN) return;
+        if (payload.type === "audio") {
+          agentAudioChunks += 1;
+          if (agentAudioChunks === 1 || agentAudioChunks % 40 === 0) {
+            slog.clientOut("audio", { chunk: agentAudioChunks });
+          }
+        } else if (payload.type) {
+          slog.clientOut(String(payload.type), summarizeForLog(payload));
+        }
         ws.send(JSON.stringify(payload));
       };
 
@@ -453,12 +498,17 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
               const functionResponses = [];
               try {
                 for (const fc of message.toolCall.functionCalls) {
+                  slog.agent("tool_call", { name: fc.name, args: fc.args });
                   console.log(`Tool call: ${fc.name}`, fc.args);
                   const result = await handleComplaintToolCall(
                     fc.name,
                     (fc.args || {}) as Record<string, unknown>
                   );
                   const safeResult = sanitizeToolResponse(result);
+                  slog.agent("tool_result", {
+                    name: fc.name,
+                    result: summarizeForLog(safeResult),
+                  });
                   functionResponses.push({
                     id: fc.id,
                     name: fc.name,
@@ -490,6 +540,9 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
                   session.sendToolResponse({ functionResponses });
                 }
               } catch (err) {
+                slog.error("tool_call_failed", {
+                  message: err instanceof Error ? err.message : String(err),
+                });
                 console.error("Tool call handling failed:", err);
                 sendJson({
                   type: "error",
@@ -518,9 +571,11 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             if (message.serverContent?.modelTurn?.parts) {
               for (const part of message.serverContent.modelTurn.parts) {
                 if (part.text) {
+                  const text = normalizePakistaniTranscript(part.text);
+                  slog.agent("model_text", { text });
                   sendJson({
                     type: "model-text",
-                    text: normalizePakistaniTranscript(part.text),
+                    text,
                   });
                 }
               }
@@ -528,15 +583,18 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
 
             const outputTx = message.serverContent?.outputTranscription?.text;
             if (outputTx) {
+              const text = normalizePakistaniTranscript(outputTx);
+              slog.agent("model_transcript", { text });
               sendJson({
                 type: "model-text",
-                text: normalizePakistaniTranscript(outputTx),
+                text,
               });
             }
 
             const emitUserText = (text: string) => {
               const normalized = normalizePakistaniTranscript(text);
               if (!normalized.trim()) return;
+              slog.agent("user_transcript", { text: normalized });
               sendJson({ type: "user-text", text: normalized });
               recentUserTranscript = `${recentUserTranscript} ${normalized}`
                 .replace(/\s+/g, " ")
@@ -564,6 +622,10 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             if (inputTx) emitUserText(inputTx);
           },
           onclose: (ev?: any) => {
+            slog.info("live_session_closed", {
+              code: ev?.code || null,
+              reason: ev?.reason || null,
+            });
             console.log(
               "Plano Agent session closed",
               ev?.code || ev?.reason || ""
@@ -572,6 +634,9 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             sendJson({ type: "status", status: "closed" });
           },
           onerror: (err: any) => {
+            slog.error("live_session_error", {
+              message: err?.message || String(err),
+            });
             console.error("Plano Agent session error:", err);
             sendJson({
               type: "error",
@@ -584,6 +649,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
 
       aiSessionReady = true;
       console.log("Plano Agent session established");
+      slog.info("live_session_established", { sessionId: slog.sessionId });
       sendJson({ type: "status", status: "established" });
 
       const greetingCue =
@@ -594,6 +660,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
         if (ws.readyState !== ws.OPEN) return;
         greetingSent = true;
         try {
+          slog.agent("greeting_cue_sent");
           session.sendClientContent({
             turns: [
               {
@@ -624,11 +691,23 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
               message.type === "activity_start" ||
               message.type === "activity_end"
             ) {
+              slog.debug("client_input_blocked_tool_pending", {
+                type: message.type || (message.audio ? "audio" : "unknown"),
+              });
               return;
             }
           }
 
           if (message.audio && session && aiSessionReady) {
+            clientAudioChunks += 1;
+            clientAudioChars +=
+              typeof message.audio === "string" ? message.audio.length : 0;
+            if (clientAudioChunks === 1 || clientAudioChunks % 40 === 0) {
+              slog.clientIn("audio", {
+                chunk: clientAudioChunks,
+                chars: clientAudioChars,
+              });
+            }
             session.sendRealtimeInput({
               audio: {
                 data: message.audio,
@@ -638,10 +717,13 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
           }
 
           if (message.type === "activity_start" && session && aiSessionReady) {
+            slog.clientIn("activity_start");
             session.sendRealtimeInput({ activityStart: {} });
           }
 
           if (message.type === "activity_end" && session && aiSessionReady) {
+            flushAudioStats("activity_end");
+            slog.clientIn("activity_end");
             session.sendRealtimeInput({ activityEnd: {} });
           }
 
@@ -652,6 +734,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             session &&
             aiSessionReady
           ) {
+            slog.clientIn("user_text", { text: message.text.trim() });
             session.sendClientContent({
               turns: [
                 {
@@ -663,6 +746,9 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             });
           }
         } catch (err) {
+          slog.error("client_message_error", {
+            message: err instanceof Error ? err.message : String(err),
+          });
           console.error("Error processing client message:", err);
         }
       };
@@ -673,16 +759,22 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
         clientClosed = true;
         clearTimeout(greetingTimer);
         ws.off("message", onClientMessage);
+        slog.info("ws_closed");
+        flushAudioStats("ws_closed");
         console.log("Client WebSocket connection closed");
         try {
           session?.close();
         } catch (err) {
+          slog.error("session_close_error", {
+            message: err instanceof Error ? err.message : String(err),
+          });
           console.error("Error closing Plano Agent session:", err);
         }
         session = null;
         aiSessionReady = false;
       });
     } catch (err: any) {
+      slog.error("live_init_failed", { message: err?.message || String(err) });
       console.error("Failed to initialize Plano Agent:", err);
       ws.send(
         JSON.stringify({
@@ -708,6 +800,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
             "**/data/complaints.json",
             "**/data/*.json.tmp",
             "**/*.json.tmp",
+            "**/logs/**",
           ],
         },
       },
@@ -724,6 +817,7 @@ Never reply in English, Roman Urdu, Punjabi, Hindi, or Devanagari/Gurmukhi.`;
 
   server.listen(PORT, "0.0.0.0", () => {
     console.log(`Plano Agent listening on http://0.0.0.0:${PORT}`);
+    logBoot("sapphire-agent-live", { port: PORT, listening: true });
   });
 }
 

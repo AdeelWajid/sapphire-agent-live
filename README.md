@@ -18,6 +18,15 @@ npm run dev
 
 Open http://localhost:3000
 
+## Logs
+
+Communication logs are written under `logs/`:
+
+- `logs/agent-YYYY-MM-DD.log` — all sessions for the day (JSON lines)
+- `logs/sessions/<sessionId>.log` — one file per Live call
+
+Raw audio is not stored (only chunk counts). Tool calls, transcripts, and client events are logged.
+
 ## API
 
 - `GET /api/products` — clothing catalog

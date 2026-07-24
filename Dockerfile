@@ -10,7 +10,7 @@ RUN npm ci
 COPY index.html ./
 COPY tsconfig.json vite.config.ts ./
 COPY metadata.json ./
-COPY server.ts dataStore.ts complaintPrompt.ts complaintTools.ts ./
+COPY server.ts dataStore.ts complaintPrompt.ts complaintTools.ts sessionLogger.ts ./
 COPY data ./data
 COPY src ./src
 
