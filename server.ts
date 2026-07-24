@@ -19,6 +19,10 @@ import { COMPLAINT_TOOLS, handleComplaintToolCall } from "./complaintTools";
 import {
   createSessionLogger,
   logBoot,
+  listDayLogFiles,
+  listSessionLogFiles,
+  readDayLog,
+  readSessionLog,
   summarizeForLog,
 } from "./sessionLogger";
 
@@ -197,6 +201,44 @@ async function startServer() {
     } catch (err: any) {
       console.error("create complaint failed:", err);
       res.status(400).json({ ok: false, error: err?.message || "Failed to create complaint" });
+    }
+  });
+
+  app.get("/api/logs", (_req, res) => {
+    try {
+      res.json({
+        ok: true,
+        days: listDayLogFiles(),
+        sessions: listSessionLogFiles(100),
+      });
+    } catch (err: any) {
+      console.error("logs index failed:", err);
+      res.status(500).json({ ok: false, error: err?.message || "Failed to list logs" });
+    }
+  });
+
+  app.get("/api/logs/day/:day", (req, res) => {
+    try {
+      const tail = Number(req.query.tail) || 300;
+      const entries = readDayLog(String(req.params.day || ""), tail);
+      res.json({ ok: true, kind: "day", id: req.params.day, entries });
+    } catch (err: any) {
+      console.error("day log read failed:", err);
+      res.status(400).json({ ok: false, error: err?.message || "Failed to read day log" });
+    }
+  });
+
+  app.get("/api/logs/session/:id", (req, res) => {
+    try {
+      const tail = Number(req.query.tail) || 500;
+      const entries = readSessionLog(String(req.params.id || ""), tail);
+      res.json({ ok: true, kind: "session", id: req.params.id, entries });
+    } catch (err: any) {
+      console.error("session log read failed:", err);
+      res.status(400).json({
+        ok: false,
+        error: err?.message || "Failed to read session log",
+      });
     }
   });
 

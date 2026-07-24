@@ -20,7 +20,7 @@ Open http://localhost:3000
 
 ## Logs
 
-Communication logs are written under `logs/`:
+Communication logs are written under `logs/` and also shown in the web UI (**Live logs** panel):
 
 - `logs/agent-YYYY-MM-DD.log` — all sessions for the day (JSON lines)
 - `logs/sessions/<sessionId>.log` — one file per Live call

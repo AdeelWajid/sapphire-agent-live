@@ -138,3 +138,101 @@ export function createSessionLogger(
     agent: (event, data) => log("info", `agent:${event}`, data),
   };
 }
+
+export type LogEntry = {
+  ts?: string;
+  level?: string;
+  scope?: string;
+  event?: string;
+  data?: unknown;
+  raw?: string;
+};
+
+export type LogFileInfo = {
+  id: string;
+  name: string;
+  kind: "day" | "session";
+  sizeBytes: number;
+  mtimeMs: number;
+  mtime: string;
+};
+
+function safeTailLines(filePath: string, maxLines: number): string[] {
+  if (!fs.existsSync(filePath)) return [];
+  const text = fs.readFileSync(filePath, "utf8");
+  const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  if (lines.length <= maxLines) return lines;
+  return lines.slice(-maxLines);
+}
+
+function parseLogLines(lines: string[]): LogEntry[] {
+  return lines.map((line) => {
+    try {
+      const parsed = JSON.parse(line) as LogEntry;
+      return parsed;
+    } catch {
+      return { raw: line, level: "info", event: "raw" };
+    }
+  });
+}
+
+export function listDayLogFiles(): LogFileInfo[] {
+  ensureDirs();
+  return fs
+    .readdirSync(LOG_DIR)
+    .filter((name) => /^agent-\d{4}-\d{2}-\d{2}\.log$/.test(name))
+    .map((name) => {
+      const full = path.join(LOG_DIR, name);
+      const st = fs.statSync(full);
+      return {
+        id: name.slice(6, 16),
+        name,
+        kind: "day" as const,
+        sizeBytes: st.size,
+        mtimeMs: st.mtimeMs,
+        mtime: st.mtime.toISOString(),
+      };
+    })
+    .sort((a, b) => b.mtimeMs - a.mtimeMs);
+}
+
+export function listSessionLogFiles(limit = 80): LogFileInfo[] {
+  ensureDirs();
+  return fs
+    .readdirSync(SESSIONS_DIR)
+    .filter((name) => /^[\w-]+\.log$/.test(name))
+    .map((name) => {
+      const full = path.join(SESSIONS_DIR, name);
+      const st = fs.statSync(full);
+      return {
+        id: name.replace(/\.log$/, ""),
+        name,
+        kind: "session" as const,
+        sizeBytes: st.size,
+        mtimeMs: st.mtimeMs,
+        mtime: st.mtime.toISOString(),
+      };
+    })
+    .sort((a, b) => b.mtimeMs - a.mtimeMs)
+    .slice(0, Math.max(1, Math.min(limit, 200)));
+}
+
+export function readDayLog(day: string, tailLines = 300): LogEntry[] {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+    throw new Error("Invalid day id");
+  }
+  const filePath = path.join(LOG_DIR, `agent-${day}.log`);
+  return parseLogLines(safeTailLines(filePath, Math.max(20, Math.min(tailLines, 2000))));
+}
+
+export function readSessionLog(sessionId: string, tailLines = 500): LogEntry[] {
+  if (!/^[\w-]+$/.test(sessionId)) {
+    throw new Error("Invalid session id");
+  }
+  const filePath = path.join(SESSIONS_DIR, `${sessionId}.log`);
+  return parseLogLines(safeTailLines(filePath, Math.max(20, Math.min(tailLines, 2000))));
+}
+
+export function getLogDirPath() {
+  return LOG_DIR;
+}
